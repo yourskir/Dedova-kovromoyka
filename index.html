@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Golos+Text:wght@400;600&family=Prata&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#120E0B"></head><body>
-<style>
+<style>/*@@file src/style.css*/
 :root {
   color-scheme: dark;
   --ground: #120E0B;
@@ -423,6 +423,7 @@ svg.i { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-widt
 .aw.got small { color: var(--ink2); }
 .jtabs button { padding: 8px 11px; }
 </style>
+<!--@@file src/body.html-->
 <div id="app">
   <canvas id="gl"></canvas>
   <canvas id="ov"></canvas>
@@ -562,7 +563,9 @@ svg.i { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-widt
 
   <div id="glFail" hidden>Для игры нужен WebGL. Откройте её в свежем Safari или Chrome.</div>
 </div>
+<!--@@end-->
 <script>
+/*@@file src/js/00_util.js*/
 "use strict";
 const $ = (id) => document.getElementById(id);
 const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
@@ -643,6 +646,7 @@ if (typeof CanvasRenderingContext2D !== "undefined" && !CanvasRenderingContext2D
   };
 }
 
+/*@@file src/js/10_rugs.js*/
 // ===== Rug pattern generator: knots -> texture =====
 // zones: 0 поле, 1 медальон, 2 углы, 3 кайма, 4 бордюры, 5 бахрома
 const ZONE_NAMES = ["Поле", "Медальон", "Углы", "Кайма", "Бордюры", "Бахрома"];
@@ -1691,6 +1695,7 @@ function drawFringe(rug, onlySide) {
   }
 }
 
+/*@@file src/js/20_sim.js*/
 // ===== Simulation: dirt, fluids, tools =====
 var UPG = {};
 const STAINS = {
@@ -2856,6 +2861,7 @@ FloorSim.prototype._foamTick = function (dt, dx0, dy0) {
   if (cnt) this.dirty = true; else this.foamAny = false;
 };
 
+/*@@file src/js/30_gl.js*/
 // ===== WebGL renderer =====
 const VS = `
 attribute vec2 aP;
@@ -3533,6 +3539,7 @@ function makeFloorCanvas(key) {
   return cv;
 }
 
+/*@@file src/js/40_fx.js*/
 // ===== Overlay: particles, tools, objects, props =====
 const FX = {
   cv: null, ctx: null, parts: [], sprites: {}, rip: new Float32Array(12).fill(-1), ripI: 0,
@@ -4192,6 +4199,7 @@ function drawDryRoom(ctx, sim, sx, sy, m, cpm) {
   }
 }
 
+/*@@file src/js/50_audio.js*/
 // ===== Audio: all synthesized, soft =====
 const AU = {
   ctx: null, ok: false, on: true, vol: { music: 0.55, sfx: 0.85 }, loops: {}, gaps: {},
@@ -4522,6 +4530,7 @@ const AU = {
   },
 };
 
+/*@@file src/js/60_story.js*/
 // ===== Story, orders, notes, shop =====
 const TOOLINFO = {
   duster: { name: "Машина", hint: "Выбивальная машина: ковёр идёт через барабан" },
@@ -4825,6 +4834,7 @@ function toolsUpTo(idx) {
   return set;
 }
 
+/*@@file src/js/70_game.js*/
 // ===== Game runtime =====
 const G = {
   t: 0, W: 1, H: 1, dpr: 1, cssW: 1, cssH: 1,
@@ -5579,6 +5589,7 @@ function attractTick(dt) {
   if (a.y > s.gh + 8) { a.sq = null; a.i++; a.wait = 0.35; AU.setLoop("squeegee", 0); }
 }
 
+/*@@file src/js/75_scale.js*/
 // ===== Weighing: the rolled rug on a dial scale before and after =====
 // kg per square metre of a clean rug
 const RUG_DENS = { shirvan: 2.9, kazak: 3.2, persian: 2.8, soviet: 2.1, kids: 1.6, bukhara: 2.7, kilim: 1.7, beni: 3.9, silk: 1.9, hotel: 3.1, sun: 2.0, grandpa: 3.0 };
@@ -5676,6 +5687,7 @@ function closeScale() {
   } else nextFinishStep();
 }
 
+/*@@file src/js/77_duster.js*/
 // ===== Rug dusting machine: the rug runs through a drum of rubber flails =====
 const DUSTER = { passDur: 6.5, eff: [1, 0.7, 0.45, 0.3] };
 
@@ -5773,6 +5785,7 @@ function closeDuster() {
   if (d.kg > 0.05) toast(`Машина выбила ${fmtKg(d.kg)}`);
 }
 
+/*@@file src/js/78_dryroom.js*/
 // ===== Drying room: the rug hangs on a rail, fans blow, water runs down and drips =====
 function dryRoomStart() {
   const s = G.sim, gw = s.gw, gh = s.gh;
@@ -5862,6 +5875,7 @@ function dryRoomEnd() {
   nextFinishStep();
 }
 
+/*@@file src/js/79_restore.js*/
 // ===== Restoration: frayed edges, worn spots, missing tassels =====
 // generation, called from Sim.generate
 Sim.prototype.genRestore = function (lvl, rnd) {
@@ -6037,6 +6051,7 @@ function repairTick(dt) {
   }
 }
 
+/*@@file src/js/80_ui.js*/
 // ===== UI =====
 const ICONS = {
   beater: '<path d="M14.5 14.5L21 21" stroke-width="2.6"/><path d="M14.5 14.5C11 15 6.5 12 7 8.5C7.5 5 11.5 4.8 12 7.5C12.4 9.8 9.6 10.6 8.2 9.2"/><path d="M14.5 14.5C15 11 12 6.5 8.5 7" /><path d="M14.5 14.5C11.5 17.5 5 17 4 13.5C3.2 10.5 5.5 8.5 8 9"/><path d="M14.5 14.5C17.5 11.5 17 5 13.5 4C10.5 3.2 8.5 5.5 9 8"/>',
@@ -6568,6 +6583,7 @@ function rugThumb(def) {
   return THUMBS[key];
 }
 
+/*@@file src/js/82_scale_ui.js*/
 // ===== Weighing screen: dial scale drawn on canvas =====
 const SC = { W: 720, H: 800, cx: 360, cy: 290, R: 222, rollL: 470, rollY: 666 };
 function scAng(w, v) { return (135 + 270 * clamp(v / w.max, -0.025, 1.025)) * Math.PI / 180; }
@@ -6858,6 +6874,7 @@ Object.assign(UI, {
   },
 });
 
+/*@@file src/js/83_duster_ui.js*/
 // ===== Dusting machine screen: top view of the conveyor and the drum housing =====
 const DU = { W: 720, H: 900, Ym: 380, rx: 130, rw: 460 };
 
@@ -7033,6 +7050,7 @@ Object.assign(UI, {
   },
 });
 
+/*@@file src/js/84_ach.js*/
 // ===== Awards: small milestones of the workshop =====
 const ACH = [
   { id: "first", name: "Первый ковёр", desc: "Сдать первый заказ", icon: "star" },
@@ -7074,6 +7092,7 @@ function achOnResult(o, gr, stars, wIn, wOut) {
   if (o.finale) grantAch("story");
 }
 
+/*@@file src/js/85_save.js*/
 // ===== Save: local + artifact db =====
 function defaultSave() { return { v: 1, t: 0, started: false, next: 0, stars: {}, money: 0, earned: 0, owned: {}, notes: {}, settings: { music: 0.55, sfx: 0.85, on: true }, quickCount: 0, cur: null, chSeen: 0, done: false, kgOut: 0, album: [], ach: {}, daily: {}, dailyStreak: null, dusterPasses: 0, dried: 0, flea: null, stock: [], wall: [], hooks: 0, fleaPending: null, fleaProfit: 0, fleaSold: 0, codeN: 0 }; }
 let S = defaultSave();
@@ -7247,6 +7266,7 @@ async function backupAndReset() {
   saveNow(true);
 }
 
+/*@@file src/js/85a_tg.js*/
 // ===== Telegram: the game as a mini app, progress in the player's Telegram cloud =====
 function tgApp() { const w = window.Telegram && window.Telegram.WebApp; return window.KOVRY_TG && w ? w : null; }
 function tgCall(fn, ...args) { return new Promise((res, rej) => { try { fn(...args, (err, val) => (err ? rej(err) : res(val))); } catch (e) { rej(e); } }); }
@@ -7314,6 +7334,7 @@ function tgDb() {
   try { if (w.isVersionAtLeast("7.10")) w.setBottomBarColor("#120E0B"); } catch (e) {}
 })();
 
+/*@@file src/js/86_flea.js*/
 // ===== Flea market: buy a neglected rug, bring it back to life, sell it or hang it on the wall =====
 const FLEA_TIERS = [
   { name: "Обычный", styles: ["soviet", "sun", "kids", "beni", "hotel"], value: [2600, 4200], ages: ["1980-е", "1970-е"], unlock: 0, w: 0.55 },
@@ -7553,6 +7574,7 @@ Object.assign(UI, {
   },
 });
 
+/*@@file src/js/87_code.js*/
 // ===== Save code: the whole career as a line of text to keep in notes or a chat =====
 const CODE_PREFIX = "KOVRY1-";
 async function makeSaveCode() {
@@ -7634,6 +7656,7 @@ Object.assign(UI, {
 $("pCode").onclick = () => { AU.tok(); UI.openCode(); };
 $("pCode").hidden = !window.KOVRY_GUEST;
 
+/*@@file src/js/90_main.js*/
 // ===== Boot, input, loop, flows =====
 function resize(force) {
   const w = Math.max(1, window.innerWidth), h = Math.max(1, window.innerHeight);
