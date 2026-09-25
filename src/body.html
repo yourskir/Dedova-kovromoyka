@@ -1,0 +1,139 @@
+<div id="app">
+  <canvas id="gl"></canvas>
+  <canvas id="ov"></canvas>
+
+  <div id="hud" hidden>
+    <div class="tag" id="tag"><span class="no" id="tagNo">№ 1</span><b id="tagRug">Коврик</b><i id="tagClient">Зинаида Павловна</i></div>
+    <div class="hud-r">
+      <div class="col">
+        <button id="gauge" aria-label="Чистота. Нажми, чтобы подсветить грязь">
+          <svg viewBox="0 0 66 66" aria-hidden="true">
+            <defs>
+              <radialGradient id="bz" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#3b2b20"/><stop offset="1" stop-color="#1a130e"/></radialGradient>
+            </defs>
+            <circle cx="33" cy="33" r="31" fill="url(#bz)" stroke="#8A6430" stroke-width="1.5"/>
+            <circle cx="33" cy="33" r="25" fill="none" stroke="#2c211a" stroke-width="5"/>
+            <circle id="gArc" cx="33" cy="33" r="25" fill="none" stroke="#86B06F" stroke-width="5" stroke-linecap="round" stroke-dasharray="0 158" transform="rotate(-90 33 33)"/>
+            <g id="gTicks"></g>
+          </svg>
+          <div class="pct" id="gPct">0</div>
+          <div class="lbl">чистота</div>
+          <span class="eye" id="gEye" hidden></span>
+          <span class="soap" id="gSoap" hidden></span>
+        </button>
+        <button id="btnDone" class="off"><span>Сдать</span><small id="doneSub"></small></button>
+      </div>
+      <div class="col">
+        <button class="rb" id="btnMenu" aria-label="Меню"></button>
+        <button class="rb" id="btnBook" aria-label="Тетрадь деда"></button>
+        <button class="rb" id="btnFit" aria-label="Показать весь ковёр" hidden></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="note" hidden><p id="noteTxt"></p><span class="sig">дед Семён</span></div>
+  <div id="tip" hidden></div>
+  <div id="lbl" hidden></div>
+  <div id="dock" hidden><div id="dockScroll"></div></div>
+  <div id="toasts"></div>
+
+  <section id="scrTitle" class="scr">
+    <button class="rb tsound" id="tSound" aria-label="Звук"></button>
+    <div class="title-top">
+      <div class="eyebrow">Мастерская в гаражном кооперативе</div>
+      <h1>Дедова ковромойка</h1>
+      <p>Под любой грязью лежит узор</p>
+    </div>
+    <div class="title-menu">
+      <button class="plaque main" id="tContinue"><span class="pt"><b id="tContB">Ищу сохранение…</b><small id="tContS">секунду</small></span><svg class="i" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      <div class="row2">
+        <button class="plaque" id="tQuick"><span class="pt"><b>Быстрый заказ</b><small>на 5 минут</small></span></button>
+        <button class="plaque" id="tDaily"><span class="pt"><b>Заказ дня</b><small>новый ковёр каждый день</small></span></button>
+      </div>
+      <div class="row2">
+        <button class="plaque" id="tFree"><span class="pt"><b>Свободная мойка</b><small>любой ковёр</small></span></button>
+        <button class="plaque" id="tJournal"><span class="pt"><b>Журнал</b><small>заказы, альбом, награды</small></span></button>
+      </div>
+      <div class="row2">
+        <button class="plaque" id="tMarket"><span class="pt"><b>Барахолка</b><small id="tMarketS">ковры на продажу</small></span></button>
+        <button class="plaque" id="tShop"><span class="pt"><b>Лавка</b><small id="tShopS">инструменты</small></span></button>
+      </div>
+      <div class="tlinks"><button class="tlink" id="tNew">Новая история</button></div>
+    </div>
+  </section>
+
+  <section id="scrTicket" class="paperwrap" hidden>
+    <div class="paper" id="ticket"></div>
+  </section>
+
+  <section id="scrChapter" class="scr" hidden>
+    <div class="n" id="chN">Глава первая</div>
+    <h2 id="chT">Гараж № 14</h2>
+    <div class="txt" id="chTxt"></div>
+    <button class="plaque main go" id="chGo"><span class="pt"><b>Дальше</b></span><svg class="i" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  </section>
+
+  <div id="pauseWrap" hidden>
+    <div class="scrim" id="pauseScrim"></div>
+    <div class="panel" id="pause">
+      <h2>Пауза</h2>
+      <div class="slider"><label for="volMusic">Музыка</label><input type="range" id="volMusic" min="0" max="100" step="1"><output id="volMusicO">55</output></div>
+      <div class="slider"><label for="volSfx">Звуки</label><input type="range" id="volSfx" min="0" max="100" step="1"><output id="volSfxO">85</output></div>
+      <div class="stack" style="margin-top:10px">
+        <button class="plaque sm main" id="pResume"><span class="pt"><b>Продолжить мойку</b></span></button>
+        <button class="plaque sm" id="pBook"><span class="pt"><b>Тетрадь деда</b></span></button>
+        <button class="plaque sm" id="pShop"><span class="pt"><b>Лавка Михалыча</b></span></button>
+        <button class="plaque sm" id="pRestart"><span class="pt"><b>Начать ковёр заново</b></span></button>
+        <button class="plaque sm" id="pCode"><span class="pt"><b>Код сохранения</b><small>перенос прогресса</small></span></button>
+        <button class="plaque sm" id="pHome"><span class="pt"><b>В главное меню</b><small>заказ сохранится</small></span></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirmWrap" hidden>
+    <div class="scrim" id="confirmScrim"></div>
+    <div class="panel" id="confirm"></div>
+  </div>
+
+  <section id="sheet" class="sheet" hidden>
+    <div class="sheet-h"><h2 id="sheetT">Журнал</h2><button class="rb" id="sheetX" aria-label="Закрыть"></button></div>
+    <div class="sheet-b" id="sheetB"></div>
+  </section>
+
+  <section id="scrFinish" hidden>
+    <div id="spinBox" hidden>
+      <canvas id="spinCv" width="720" height="720"></canvas>
+      <div class="meter"><i id="spinMeter"></i></div>
+      <button class="holdbtn" id="spinBtn"><span>Держи<small>барабан крутится</small></span></button>
+      <div class="fcap" id="spinCap">Центрифуга выжмет воду из ворса</div>
+    </div>
+    <div class="fbar"><div class="steps" id="fSteps"></div><div class="fcap" id="fCap" hidden></div></div>
+    <div id="fBottom" hidden></div>
+  </section>
+
+  <section id="scrScale" hidden>
+    <div class="sc-top"><div class="sc-h" id="scH">Весы</div><div class="sc-sub" id="scSub"></div></div>
+    <canvas id="scaleCv" width="720" height="800"></canvas>
+    <div class="sc-read" id="scRead"></div>
+    <div class="sc-more" id="scMore"></div>
+    <div class="sc-bar"><button class="plaque main" id="scGo"></button></div>
+  </section>
+
+  <section id="scrDuster" hidden>
+    <div class="sc-top"><div class="sc-h">Выбивальная машина</div><div class="sc-sub" id="duSub"></div></div>
+    <canvas id="duCv" width="720" height="900"></canvas>
+    <div class="du-read"><span><small>выбито</small><b id="duKg">0 г</b></span><span><small>&nbsp;</small><i id="duPass">проход 1</i></span></div>
+    <div class="du-bar"><button class="holdbtn" id="duHold"><span>Держи<small>барабан бьёт</small></span></button><button class="plaque main" id="duGo"></button></div>
+  </section>
+
+  <section id="scrResult" hidden>
+    <div id="cmpBar"><div class="knob"><svg class="i" viewBox="0 0 24 24"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/></svg></div></div>
+    <div class="cmpLbl" id="lblBefore" style="left:14px">Было</div>
+    <div class="cmpLbl" id="lblAfter" style="right:14px">Стало</div>
+    <button id="tlBtn" hidden></button>
+    <div id="tlClock" hidden><b id="tlTime">0:00</b><span><i id="tlBar"></i></span></div>
+    <div id="rcpt"></div>
+  </section>
+
+  <div id="glFail" hidden>Для игры нужен WebGL. Откройте её в свежем Safari или Chrome.</div>
+</div>
