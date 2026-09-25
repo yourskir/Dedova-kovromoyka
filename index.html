@@ -49,7 +49,7 @@ svg.i { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-widt
 
 /* ---------- HUD ---------- */
 #hud { position: absolute; left: 0; right: 0; top: 0; padding: calc(var(--safeT) + 8px) 12px 0; display: flex; align-items: flex-start; gap: 10px; pointer-events: none; z-index: 5; }
-.tag { pointer-events: auto; position: relative; background: var(--paper); color: var(--pink); padding: 7px 36px 7px 26px; border-radius: 4px 12px 12px 4px; transform: rotate(-1.5deg); box-shadow: 0 3px 0 rgba(0,0,0,.35); max-width: calc(100vw - 168px); min-width: 0; flex: 0 1 auto; clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%); }
+.tag { pointer-events: auto; position: relative; background: var(--paper); color: var(--pink); padding: 7px 46px 7px 26px; border-radius: 4px 12px 12px 4px; transform: rotate(-1.5deg); box-shadow: 0 3px 0 rgba(0,0,0,.35); max-width: calc(100vw - 180px); min-width: 0; flex: 0 1 auto; clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%); }
 .tag::before { content: ""; position: absolute; left: 12px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: #5a4533; box-shadow: inset 0 1px 1px rgba(0,0,0,.6); }
 .tag b { display: block; font-family: var(--f-disp); font-weight: 400; font-size: 14px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .tag i { display: block; font-family: var(--f-hand); font-style: normal; font-size: 17px; line-height: 1.05; color: #6a4a32; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -72,14 +72,14 @@ svg.i { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-widt
 #money { pointer-events: none; font-family: var(--f-disp); font-size: 13px; color: var(--brass2); text-shadow: 0 1px 0 #000; white-space: nowrap; }
 
 /* grandfather's note */
-#note { position: absolute; left: 12px; top: calc(var(--safeT) + 124px); z-index: 6; max-width: min(360px, calc(100vw - 24px)); background: var(--paper) repeating-linear-gradient(transparent 0 25px, rgba(70,110,170,.22) 25px 26px); background-position: 0 6px; color: #2c2118; padding: 10px 14px 8px 16px; border-radius: 3px; box-shadow: 0 6px 0 rgba(0,0,0,.25), 0 10px 24px rgba(0,0,0,.35); transform: rotate(-.8deg); animation: noteIn .45s cubic-bezier(.2,.9,.3,1.2) both; pointer-events: auto; }
+#note { position: absolute; left: 12px; top: calc(var(--safeT) + 124px); z-index: 6; box-sizing: border-box; max-width: min(360px, calc(100vw - 30px)); background: var(--paper) repeating-linear-gradient(transparent 0 25px, rgba(70,110,170,.22) 25px 26px); background-position: 0 6px; color: #2c2118; padding: 10px 14px 8px 16px; border-radius: 3px; box-shadow: 0 6px 0 rgba(0,0,0,.25), 0 10px 24px rgba(0,0,0,.35); transform: rotate(-.8deg); animation: noteIn .45s cubic-bezier(.2,.9,.3,1.2) both; pointer-events: auto; }
 #note::before { content: ""; position: absolute; left: 44%; top: -8px; width: 54px; height: 16px; background: rgba(230,215,170,.75); transform: rotate(2deg); }
 #note p { margin: 0; font-family: var(--f-hand); font-size: 20px; line-height: 26px; }
 #note .sig { display: block; text-align: right; font-family: var(--f-hand); font-size: 15px; color: #7a5a3c; margin-top: 2px; }
 @keyframes noteIn { from { opacity: 0; transform: translateY(-14px) rotate(-3deg); } to { opacity: 1; transform: translateY(0) rotate(-.8deg); } }
 
 /* tool tip strip */
-#tip { position: absolute; left: 12px; top: calc(var(--safeT) + 70px); z-index: 5; background: var(--walnut); color: var(--ink); border-radius: 12px; padding: 6px 11px; font-size: 12px; line-height: 1.3; box-shadow: inset 0 0 0 1px var(--brass3), 0 4px 12px rgba(0,0,0,.4); max-width: calc(100vw - 160px); pointer-events: none; }
+#tip { position: absolute; left: 12px; top: calc(var(--safeT) + 70px); z-index: 5; background: var(--walnut); color: var(--ink); border-radius: 12px; padding: 6px 11px; font-size: 12px; line-height: 1.3; box-shadow: inset 0 0 0 1px var(--brass3), 0 4px 12px rgba(0,0,0,.4); max-width: calc(100vw - 176px); pointer-events: none; }
 #tip b { color: var(--brass2); font-weight: 600; }
 
 /* done stamp */
@@ -129,7 +129,8 @@ svg.i { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-widt
 /* title */
 #scrTitle { justify-content: space-between; background: linear-gradient(rgba(18,14,11,.92), rgba(18,14,11,.2) 34%, rgba(18,14,11,0) 55%, rgba(18,14,11,.55) 72%, rgba(18,14,11,.94)); }
 .title-top { padding: calc(var(--safeT) + 40px) 24px 0; text-align: center; }
-.title-top .eyebrow { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--brass2); }
+.tg .title-top { padding-top: calc(var(--safeT) + 26px); }
+.title-top .eyebrow { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--brass2); padding: 0 42px; }
 .title-top h1 { margin: 10px 0 6px; font-family: var(--f-disp); font-weight: 400; font-size: clamp(36px, 11vw, 54px); line-height: 1.02; text-wrap: balance; text-shadow: 0 2px 0 rgba(0,0,0,.5); }
 .title-top p { margin: 0; font-family: var(--f-hand); font-size: 22px; color: var(--ink2); }
 .title-menu { padding: 0 24px calc(var(--safeB) + 26px); display: flex; flex-direction: column; gap: 10px; align-items: stretch; max-width: 420px; width: 100%; margin: 0 auto; box-sizing: border-box; }
@@ -168,7 +169,7 @@ svg.i { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-widt
 .btn-ink { flex: 1; padding: 13px 14px; font-family: var(--f-disp); font-size: 17px; color: #fbeee0; background: radial-gradient(circle at 40% 30%, #c44c3b, var(--seal) 60%, var(--seal2)); border-radius: 6px; box-shadow: inset 0 -3px 0 rgba(0,0,0,.25), 0 2px 0 rgba(0,0,0,.25); }
 .btn-ink.alt { color: var(--pink); background: transparent; box-shadow: inset 0 0 0 1.5px rgba(58,42,30,.45); font-family: var(--f-body); font-size: 14px; flex: 0 0 auto; padding: 12px 14px; }
 .btn-ink:active { transform: translateY(1px); }
-.stamp-mark { position: absolute; right: 16px; top: 44px; transform: rotate(-12deg); border: 2.5px solid rgba(168,53,44,.7); color: rgba(168,53,44,.75); padding: 3px 8px; font-family: var(--f-disp); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; border-radius: 4px; }
+.stamp-mark { display: inline-flex; align-items: center; gap: 6px; margin: 10px 0 2px 4px; transform: rotate(-4deg); border: 2.5px solid rgba(168,53,44,.7); color: rgba(168,53,44,.75); padding: 3px 8px; font-family: var(--f-disp); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; border-radius: 4px; }
 
 /* chapter screen */
 #scrChapter { z-index: 26; background: radial-gradient(ellipse at 50% 30%, #2d2119, var(--ground) 70%); justify-content: center; align-items: center; padding: calc(var(--safeT) + 24px) 26px calc(var(--safeB) + 24px); text-align: center; }
@@ -224,11 +225,11 @@ svg.i { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-widt
 .btn-sc.main { background: linear-gradient(#b98845, #8c6128); color: #1f150c; box-shadow: none; }
 .btn-sc .i { width: 18px; height: 18px; }
 .sc-note { margin: 14px 0 0; font-size: 12px; line-height: 1.45; color: var(--ink3); }
-.tlink { align-self: center; margin-top: 2px; padding: 6px 10px; font-size: 12.5px; color: var(--ink3); text-decoration: underline; text-underline-offset: 3px; }
+.tlink { align-self: center; margin-top: 0; padding: 11px 12px; font-size: 12.5px; color: var(--ink3); text-decoration: underline; text-underline-offset: 3px; }
 .flot .buy, .hook .buy { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 18px; background: linear-gradient(#b98845, #8c6128); color: #1f150c; font-weight: 600; font-size: 13px; }
 .flot .buy[disabled], .hook .buy[disabled] { background: #3a2c22; color: var(--ink3); }
 .buy .i { width: 16px; height: 16px; }
-.buy.sm { padding: 6px 10px; font-size: 12px; margin-top: 6px; }
+.buy.sm { padding: 9px 12px; font-size: 12.5px; margin-top: 6px; }
 .flot { display: grid; grid-template-columns: 74px 1fr; gap: 12px; padding: 12px; border-radius: 10px; background: #2a1f18; box-shadow: inset 0 0 0 1px rgba(200,150,75,.18); margin-bottom: 10px; }
 .flot.t1 { box-shadow: inset 0 0 0 1.5px rgba(214,170,90,.55); }
 .flot.t2 { box-shadow: inset 0 0 0 2px #e2bd6b, 0 0 18px rgba(226,189,107,.18); background: #30231a; }
@@ -383,10 +384,10 @@ svg.i { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-widt
 .alb { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .alb-c { background: rgba(0,0,0,.18); border-radius: 10px; padding: 8px; box-shadow: inset 0 0 0 1px rgba(200,150,75,.25); min-width: 0; }
 .alb-c b { display: block; font-size: 13px; font-weight: 600; margin-top: 6px; line-height: 1.25; }
-.alb-c small { display: block; font-size: 11px; color: var(--ink3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.alb-c small { display: block; font-size: 11px; color: var(--ink3); margin-top: 2px; line-height: 1.35; }
 .alb-img { position: relative; border-radius: 6px; overflow: hidden; aspect-ratio: 2 / 3; background: #1a1310; }
 .alb-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.alb-dirt { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; background: radial-gradient(circle at 30% 40%, rgba(120,100,70,.5), transparent 60%), radial-gradient(circle at 70% 75%, rgba(90,70,50,.55), transparent 55%), rgba(84,70,52,.78); mix-blend-mode: multiply; }
+.alb-dirt { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; background: radial-gradient(circle at 30% 40%, rgba(110,92,64,.55), transparent 60%), radial-gradient(circle at 70% 75%, rgba(78,62,44,.6), transparent 55%), rgba(92,78,58,.72); }
 .alb-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--ink); box-shadow: 0 0 4px rgba(0,0,0,.5); }
 .alb-f { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
 .alb-f .kg { font-family: var(--f-disp); font-size: 15px; color: #e4a66c; }
@@ -4124,7 +4125,7 @@ function drawDryRoom(ctx, sim, sx, sy, m, cpm) {
   const d = G.dryRoom || { fanS: [0, 0], ang: [0, 0], tray: 0, air: 0 };
   const gw = sim.gw, top = sim.by0, bot = sim.gh;
   const mid = (sim.by0 + sim.by1) / 2;
-  const fOff = gw * 0.14, fR = Math.min(0.25 * cpm, gw * 0.12);
+  const fOff = gw * 0.14, fR = Math.min(0.25 * cpm, gw * 0.12); // same numbers as dryGeom
   // airflow streaks
   for (let q = 0; q < 2; q++) {
     const k = d.fanS[q]; if (k < 0.05) continue;
@@ -4135,6 +4136,17 @@ function drawDryRoom(ctx, sim, sx, sy, m, cpm) {
       const x0 = fx + dir * (0.2 + ph * 0.5) * cpm;
       ctx.beginPath(); ctx.moveTo(sx(x0), sy(yy)); ctx.quadraticCurveTo(sx(x0 + dir * 0.12 * cpm), sy(yy + Math.sin(l + d.air) * 0.03 * cpm), sx(x0 + dir * 0.24 * cpm), sy(yy)); ctx.stroke();
     }
+  }
+  // power cords from each fan down to an inline switch and on to the socket
+  const geo = dryGeom(sim), lw = Math.max(2, 0.014 * m);
+  for (let q = 0; q < 2; q++) {
+    const f = geo[q], dir = q === 0 ? -1 : 1;
+    const x = sx(f.fx), y0 = sy(f.fy + f.fR * 1.02), yT = sy(f.swy - f.swh / 2), yB = sy(f.swy + f.swh / 2);
+    ctx.strokeStyle = "rgba(0,0,0,0.25)"; ctx.lineWidth = lw + 2; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(x + 2, y0 + 2); ctx.bezierCurveTo(x + dir * 0.08 * m + 2, (y0 + yT) / 2, x - dir * 0.05 * m + 2, yT - 0.05 * m, x + 2, yT + 2); ctx.stroke();
+    ctx.strokeStyle = "#1c1e20"; ctx.lineWidth = lw;
+    ctx.beginPath(); ctx.moveTo(x, y0); ctx.bezierCurveTo(x + dir * 0.08 * m, (y0 + yT) / 2, x - dir * 0.05 * m, yT - 0.05 * m, x, yT); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x, yB); ctx.bezierCurveTo(x, yB + 0.25 * m, x + dir * 0.18 * m, yB + 0.3 * m, x + dir * 0.22 * m, sy(sim.gh + 1.2 * cpm)); ctx.stroke();
   }
   // drip tray
   const tx0 = sx(-0.08 * cpm), tx1 = sx(gw + 0.08 * cpm), ty = sy(bot + 0.035 * cpm), th = 0.08 * m;
@@ -4196,6 +4208,36 @@ function drawDryRoom(ctx, sim, sx, sy, m, cpm) {
     for (const rr of [0.35, 0.6, 0.85, 1]) { ctx.beginPath(); ctx.arc(cx, cy, R * rr, 0, TAU); ctx.stroke(); }
     for (let a = 0; a < 12; a++) { const an = a * TAU / 12; ctx.beginPath(); ctx.moveTo(cx + Math.cos(an) * R * 0.15, cy + Math.sin(an) * R * 0.15); ctx.lineTo(cx + Math.cos(an) * R, cy + Math.sin(an) * R); ctx.stroke(); }
     ctx.fillStyle = k > 0.05 ? "#8fd07a" : "#4a5a44"; ctx.beginPath(); ctx.arc(cx, cy + R * 1.12, Math.max(2, 0.012 * m), 0, TAU); ctx.fill();
+  }
+  // inline cord switches: a rocker with a lamp, it glows while the fan runs
+  for (let q = 0; q < 2; q++) {
+    const f = geo[q], on = !!(d.fans && d.fans[q]);
+    const w = f.sww / cpm * m, h = f.swh / cpm * m, x0 = sx(f.swx) - w / 2, y0 = sy(f.swy) - h / 2;
+    const since = G.t - ((d.flip && d.flip[q]) || -9), press = since < 0.12 ? 1 - since / 0.12 : 0;
+    // a soft pulse invites the first tap
+    if (!on && !(d.fans && (d.fans[0] || d.fans[1])) && G.dryRoom && G.t % 1.6 < 0.9) {
+      const k = Math.sin((G.t % 1.6) / 0.9 * Math.PI);
+      ctx.strokeStyle = `rgba(240,207,143,${0.55 * k})`; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.roundRect(x0 - 6 - 4 * k, y0 - 6 - 4 * k, w + 12 + 8 * k, h + 12 + 8 * k, 10); ctx.stroke();
+    }
+    ctx.fillStyle = "rgba(0,0,0,0.35)"; ctx.beginPath(); ctx.roundRect(x0 + 2, y0 + 3, w, h, w * 0.3); ctx.fill();
+    let g2 = ctx.createLinearGradient(x0, 0, x0 + w, 0);
+    g2.addColorStop(0, "#d9d4ca"); g2.addColorStop(0.5, "#f1ede5"); g2.addColorStop(1, "#b8b1a5");
+    ctx.fillStyle = g2; ctx.beginPath(); ctx.roundRect(x0, y0, w, h, w * 0.3); ctx.fill();
+    ctx.strokeStyle = "rgba(60,50,40,0.35)"; ctx.lineWidth = 1; ctx.stroke();
+    // rocker: the top half sinks when switched on
+    const rx = x0 + w * 0.2, ry = y0 + h * 0.3, rw = w * 0.6, rh = h * 0.52;
+    ctx.fillStyle = "#2e2a26"; ctx.beginPath(); ctx.roundRect(rx - 1.5, ry - 1.5, rw + 3, rh + 3, 3); ctx.fill();
+    g2 = ctx.createLinearGradient(0, ry, 0, ry + rh);
+    if (on) { g2.addColorStop(0, "#8e2a22"); g2.addColorStop(0.5, "#c9453a"); g2.addColorStop(1, "#e2645a"); }
+    else { g2.addColorStop(0, "#e2645a"); g2.addColorStop(0.5, "#c9453a"); g2.addColorStop(1, "#8e2a22"); }
+    ctx.fillStyle = g2; ctx.beginPath(); ctx.roundRect(rx, ry + press * 1.5, rw, rh, 2.5); ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,0.8)"; ctx.font = `600 ${Math.max(7, rh * 0.32)}px 'Golos Text', sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(on ? "I" : "O", rx + rw / 2, ry + rh * (on ? 0.68 : 0.32) + press * 1.5);
+    // lamp above the rocker
+    const lx = x0 + w / 2, ly = y0 + h * 0.15, lr = Math.max(2.2, w * 0.1);
+    if (on) { const gl = ctx.createRadialGradient(lx, ly, 0, lx, ly, lr * 4); gl.addColorStop(0, "rgba(255,170,90,0.7)"); gl.addColorStop(1, "rgba(255,170,90,0)"); ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(lx, ly, lr * 4, 0, TAU); ctx.fill(); }
+    ctx.fillStyle = on ? "#ffb35c" : "#5b534b"; ctx.beginPath(); ctx.arc(lx, ly, lr, 0, TAU); ctx.fill();
   }
 }
 
@@ -5444,7 +5486,7 @@ function askFinish() {
   strokeEnd();
   statsTick();
   const s = G.sim, pr = G.pred || predictScore();
-  const left = lossList(pr.loss).map(([k, v]) => `${LOSS_NAMES[k]} −${Math.max(1, Math.round(v))}%`);
+  const left = lossList(pr.loss).slice(0, 4).map(([k, v]) => `${LOSS_NAMES[k]} −${Math.max(1, Math.round(v))}%`);
   const rep = needsRepair(s) ? [...new Set(repairTargets(s).map((t) => REPAIR_NAMES[t.type]))] : [];
   const stars = G.order.kind === "free" ? -1 : starsFor(pr.score);
   UI.confirmFinish({ left, rep, score: pr.score, stars, pct: pr.score / 100, free: G.order.kind === "free" }, () => runFinish(), () => {});
@@ -5787,6 +5829,35 @@ function closeDuster() {
 
 /*@@file src/js/78_dryroom.js*/
 // ===== Drying room: the rug hangs on a rail, fans blow, water runs down and drips =====
+// fans stand beside the rug, each on a cord with an inline switch
+function dryGeom(s) {
+  const gw = s.gw, cpm = s.cpm, mid = (s.by0 + s.by1) / 2;
+  const fOff = gw * 0.14, fR = Math.min(0.25 * cpm, gw * 0.12);
+  return [0, 1].map((q) => {
+    const fx = q === 0 ? -fOff : gw + fOff;
+    return { fx, fy: mid, fR, swx: fx, swy: mid + fR + 0.5 * cpm, sww: 0.18 * cpm, swh: 0.3 * cpm };
+  });
+}
+// a tap on a fan or on its switch: which fan, or -1
+function dryHit(px, py) {
+  const s = G.sim; if (!s || !G.dryRoom) return -1;
+  const [wx, wy] = s2w(px, py), g = dryGeom(s);
+  const minR = 26 * G.dpr / G.cam.s;
+  for (let q = 0; q < 2; q++) {
+    const f = g[q];
+    if (Math.hypot(wx - f.fx, wy - f.fy) < Math.max(f.fR * 1.15, minR)) return q;
+    if (Math.abs(wx - f.swx) < Math.max(f.sww * 0.9, minR) && Math.abs(wy - f.swy) < Math.max(f.swh * 0.75, minR)) return q;
+  }
+  return -1;
+}
+function dryToggle(q) {
+  const d = G.dryRoom; if (!d || d.done) return;
+  d.fans[q] = !d.fans[q];
+  d.flip = d.flip || [-9, -9]; d.flip[q] = G.t;
+  AU.tok(); vibrate(8);
+  UI.dryFan(q, d.fans[q]);
+  if (d.fans[0] || d.fans[1]) UI.finishCap("Вода стекает вниз и капает в поддон");
+}
 function dryRoomStart() {
   const s = G.sim, gw = s.gw, gh = s.gh;
   const N = new Float32Array(s.n);
@@ -5806,10 +5877,11 @@ function dryRoomStart() {
   G.dry = 0;
   G.dryRoom = { N, bottom, fans: [false, false], fanS: [0, 0], ang: [0, 0], t: 0, w0: w0 / Math.max(1, c), hum: 100, done: 0, dripAcc: 0, tray: 0, mark: 0, air: 0 };
   G.propLoc = "dryroom"; GLR.setFloor("dryroom");
-  UI.finishCap(UPG.heat ? "Тепловая пушка греет воздух. Включи вентиляторы, и ковёр высохнет ещё быстрее" : "Включи вентиляторы, ковёр высохнет быстрее");
+  UI.finishCap(UPG.heat ? "Тепловая пушка греет воздух. Щёлкни выключателями на шнурах, и ковёр высохнет ещё быстрее" : "Щёлкни выключателями на шнурах вентиляторов, ковёр высохнет быстрее");
   UI.dryTools();
   measureInsets(); fitCamera(true);
-  G.camTarget = { x: s.gw / 2, y: G.fit.y + s.gh * 0.03, s: G.fit.s * 0.68 };
+  // as close as the fans on both sides allow
+  G.camTarget = { x: s.gw / 2, y: G.fit.y + s.gh * 0.03, s: Math.min(G.fit.s * 0.9, G.W / (s.gw * 1.75)) };
 }
 function dryRoomTick(dt) {
   const d = G.dryRoom; if (!d) return;
@@ -6384,7 +6456,7 @@ const UI = {
       const d = new Date(e.date);
       const k = clamp(e.dirt * 1.6, 0.2, 0.8);
       h += `<div class="alb-c"><div class="alb-img">${th ? `<img src="${th}" alt="">` : ""}<i class="alb-dirt" style="opacity:${k.toFixed(2)}"></i><i class="alb-line"></i></div>
-        <b>${e.title}</b><small>${e.client ? e.client + " · " : ""}${d.getDate()} ${months[d.getMonth()]}</small>
+        <b>${e.title}</b><small>${e.client ? e.client + " · " : ""}${d.getDate()}&nbsp;${months[d.getMonth()]}</small>
         <div class="alb-f"><span class="kg">${e.kg >= 0.01 ? "−" + fmtKg(e.kg) : "±0"}</span>${e.stars > 0 ? starsHtml(e.stars) : `<span class="pc">${e.score}%</span>`}</div></div>`;
     }
     h += `</div>`;
@@ -6428,12 +6500,9 @@ const UI = {
   // drying room: two fan switches and a hygrometer between them
   dryTools() {
     this.finishBottom(`<button class="ftool" data-f="0">${icon("fan")}<small>Слева</small></button><div class="hygro"><small>влажность</small><b id="hyg">100%</b><span><i id="hygBar"></i></span></div><button class="ftool" data-f="1">${icon("fan")}<small>Справа</small></button>`);
-    for (const b of $("fBottom").querySelectorAll(".ftool")) b.onclick = () => {
-      const d = G.dryRoom; if (!d) return;
-      AU.tok(); const q = +b.dataset.f; d.fans[q] = !d.fans[q]; b.classList.toggle("on", d.fans[q]);
-      if (d.fans[0] || d.fans[1]) UI.finishCap("Вода стекает вниз и капает в поддон");
-    };
+    for (const b of $("fBottom").querySelectorAll(".ftool")) b.onclick = () => dryToggle(+b.dataset.f);
   },
+  dryFan(q, on) { const b = $("fBottom").querySelector(`.ftool[data-f="${q}"]`); if (b) b.classList.toggle("on", on); },
   dryHum(h) { const e = $("hyg"); if (!e) return; e.textContent = h + "%"; $("hygBar").style.transform = `scaleX(${(h / 100).toFixed(3)})`; },
   // finish step with a couple of hand tools and a done plaque
   finishTools(tools, cur, doneLabel, doneSub, onDone) {
@@ -6947,9 +7016,11 @@ Object.assign(UI, {
     // brass nameplate
     g = x.createLinearGradient(0, y0 + 56, 0, y0 + 88);
     g.addColorStop(0, "#f0cf8f"); g.addColorStop(1, "#9c7236");
-    x.fillStyle = g; x.beginPath(); x.roundRect(270, y0 + 56, 180, 32, 4); x.fill();
-    x.fillStyle = "#3a2810"; x.font = "600 13px 'Golos Text', sans-serif"; x.textAlign = "center"; x.textBaseline = "middle";
-    x.fillText("ВЫБИВАЛЬНАЯ МАШИНА ВМ-2", 360, y0 + 72);
+    x.font = "600 13px 'Golos Text', sans-serif";
+    const plate = "ВЫБИВАЛЬНАЯ МАШИНА ВМ-2", pw = Math.ceil(x.measureText(plate).width) + 28;
+    x.fillStyle = g; x.beginPath(); x.roundRect(360 - pw / 2, y0 + 56, pw, 32, 4); x.fill();
+    x.fillStyle = "#3a2810"; x.textAlign = "center"; x.textBaseline = "middle";
+    x.fillText(plate, 360, y0 + 72);
     // bolts
     x.fillStyle = "rgba(20,26,22,0.8)";
     for (let b = 80; b < 650; b += 48) { x.beginPath(); x.arc(b, y0 + 44, 3, 0, TAU); x.fill(); }
@@ -7522,7 +7593,7 @@ Object.assign(UI, {
       <div class="fp-row"><span>Куплен за</span><b>${fmtMoney(p.buy)}</b></div>
       <div class="fp-row"><span>Покупатель даёт</span><b>${fmtMoney(p.sale)} <i class="${d >= 0 ? "up" : "down"}">${d >= 0 ? "+" : "−"}${fmtMoney(Math.abs(d))}</i></b></div>
       <div class="fp-row soft"><span>На стене цена растёт на 3% в день, до +30%</span></div>
-      <div class="fp-acts"><button class="btn-ink" id="fpSell">Продать</button><button class="btn-ink alt" id="fpHang" ${full ? "disabled" : ""}>${full ? "Стена занята" : "На стену"}</button></div></div>`;
+      <div class="fp-acts"><button class="${inResult ? "btn-ink" : "btn-sc main"}" id="fpSell">Продать</button><button class="${inResult ? "btn-ink alt" : "btn-sc"}" id="fpHang" ${full ? "disabled" : ""}>${full ? "Стена занята" : "На стену"}</button></div></div>`;
   },
   _stallHtml() {
     const m = fleaMarket(), stock = S.stock || [];
@@ -7720,6 +7791,7 @@ function bindInput(ov) {
   const canTool = () => (G.scr === "play" && !G.paused) || (G.scr === "finish" && G.finish && ["comb", "repair"].includes(G.finish.steps[G.finish.i]));
   ov.addEventListener("pointerdown", (e) => {
     AU.init();
+    if (G.scr === "finish" && G.dryRoom) { const q = dryHit(e.clientX * G.dpr, e.clientY * G.dpr); if (q >= 0) { e.preventDefault(); dryToggle(q); } return; }
     if (!canTool()) return;
     e.preventDefault();
     try { ov.setPointerCapture(e.pointerId); } catch (er) {}
@@ -8075,6 +8147,9 @@ function frame(ts) {
     mat: [G.rug.st.pile, G.rug.st.sheen, 0], reveal: G.reveal, dust: G.rug.st.dust, split: G.split, dry: G.dry,
     snowFloor: G.loc === "yard",
   };
+  // the title loop is decoration: half the frames keep the phone cooler
+  G.frameN = (G.frameN || 0) + 1;
+  if (titleLike && G.frameN % 2) return;
   GLR.render(G.cam, P);
   drawOverlay();
 }

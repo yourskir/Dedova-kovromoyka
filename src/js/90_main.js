@@ -61,6 +61,7 @@ function bindInput(ov) {
   const canTool = () => (G.scr === "play" && !G.paused) || (G.scr === "finish" && G.finish && ["comb", "repair"].includes(G.finish.steps[G.finish.i]));
   ov.addEventListener("pointerdown", (e) => {
     AU.init();
+    if (G.scr === "finish" && G.dryRoom) { const q = dryHit(e.clientX * G.dpr, e.clientY * G.dpr); if (q >= 0) { e.preventDefault(); dryToggle(q); } return; }
     if (!canTool()) return;
     e.preventDefault();
     try { ov.setPointerCapture(e.pointerId); } catch (er) {}
@@ -416,6 +417,9 @@ function frame(ts) {
     mat: [G.rug.st.pile, G.rug.st.sheen, 0], reveal: G.reveal, dust: G.rug.st.dust, split: G.split, dry: G.dry,
     snowFloor: G.loc === "yard",
   };
+  // the title loop is decoration: half the frames keep the phone cooler
+  G.frameN = (G.frameN || 0) + 1;
+  if (titleLike && G.frameN % 2) return;
   GLR.render(G.cam, P);
   drawOverlay();
 }

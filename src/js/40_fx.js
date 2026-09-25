@@ -582,7 +582,7 @@ function drawDryRoom(ctx, sim, sx, sy, m, cpm) {
   const d = G.dryRoom || { fanS: [0, 0], ang: [0, 0], tray: 0, air: 0 };
   const gw = sim.gw, top = sim.by0, bot = sim.gh;
   const mid = (sim.by0 + sim.by1) / 2;
-  const fOff = gw * 0.14, fR = Math.min(0.25 * cpm, gw * 0.12);
+  const fOff = gw * 0.14, fR = Math.min(0.25 * cpm, gw * 0.12); // same numbers as dryGeom
   // airflow streaks
   for (let q = 0; q < 2; q++) {
     const k = d.fanS[q]; if (k < 0.05) continue;
@@ -593,6 +593,17 @@ function drawDryRoom(ctx, sim, sx, sy, m, cpm) {
       const x0 = fx + dir * (0.2 + ph * 0.5) * cpm;
       ctx.beginPath(); ctx.moveTo(sx(x0), sy(yy)); ctx.quadraticCurveTo(sx(x0 + dir * 0.12 * cpm), sy(yy + Math.sin(l + d.air) * 0.03 * cpm), sx(x0 + dir * 0.24 * cpm), sy(yy)); ctx.stroke();
     }
+  }
+  // power cords from each fan down to an inline switch and on to the socket
+  const geo = dryGeom(sim), lw = Math.max(2, 0.014 * m);
+  for (let q = 0; q < 2; q++) {
+    const f = geo[q], dir = q === 0 ? -1 : 1;
+    const x = sx(f.fx), y0 = sy(f.fy + f.fR * 1.02), yT = sy(f.swy - f.swh / 2), yB = sy(f.swy + f.swh / 2);
+    ctx.strokeStyle = "rgba(0,0,0,0.25)"; ctx.lineWidth = lw + 2; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(x + 2, y0 + 2); ctx.bezierCurveTo(x + dir * 0.08 * m + 2, (y0 + yT) / 2, x - dir * 0.05 * m + 2, yT - 0.05 * m, x + 2, yT + 2); ctx.stroke();
+    ctx.strokeStyle = "#1c1e20"; ctx.lineWidth = lw;
+    ctx.beginPath(); ctx.moveTo(x, y0); ctx.bezierCurveTo(x + dir * 0.08 * m, (y0 + yT) / 2, x - dir * 0.05 * m, yT - 0.05 * m, x, yT); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x, yB); ctx.bezierCurveTo(x, yB + 0.25 * m, x + dir * 0.18 * m, yB + 0.3 * m, x + dir * 0.22 * m, sy(sim.gh + 1.2 * cpm)); ctx.stroke();
   }
   // drip tray
   const tx0 = sx(-0.08 * cpm), tx1 = sx(gw + 0.08 * cpm), ty = sy(bot + 0.035 * cpm), th = 0.08 * m;
@@ -654,5 +665,35 @@ function drawDryRoom(ctx, sim, sx, sy, m, cpm) {
     for (const rr of [0.35, 0.6, 0.85, 1]) { ctx.beginPath(); ctx.arc(cx, cy, R * rr, 0, TAU); ctx.stroke(); }
     for (let a = 0; a < 12; a++) { const an = a * TAU / 12; ctx.beginPath(); ctx.moveTo(cx + Math.cos(an) * R * 0.15, cy + Math.sin(an) * R * 0.15); ctx.lineTo(cx + Math.cos(an) * R, cy + Math.sin(an) * R); ctx.stroke(); }
     ctx.fillStyle = k > 0.05 ? "#8fd07a" : "#4a5a44"; ctx.beginPath(); ctx.arc(cx, cy + R * 1.12, Math.max(2, 0.012 * m), 0, TAU); ctx.fill();
+  }
+  // inline cord switches: a rocker with a lamp, it glows while the fan runs
+  for (let q = 0; q < 2; q++) {
+    const f = geo[q], on = !!(d.fans && d.fans[q]);
+    const w = f.sww / cpm * m, h = f.swh / cpm * m, x0 = sx(f.swx) - w / 2, y0 = sy(f.swy) - h / 2;
+    const since = G.t - ((d.flip && d.flip[q]) || -9), press = since < 0.12 ? 1 - since / 0.12 : 0;
+    // a soft pulse invites the first tap
+    if (!on && !(d.fans && (d.fans[0] || d.fans[1])) && G.dryRoom && G.t % 1.6 < 0.9) {
+      const k = Math.sin((G.t % 1.6) / 0.9 * Math.PI);
+      ctx.strokeStyle = `rgba(240,207,143,${0.55 * k})`; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.roundRect(x0 - 6 - 4 * k, y0 - 6 - 4 * k, w + 12 + 8 * k, h + 12 + 8 * k, 10); ctx.stroke();
+    }
+    ctx.fillStyle = "rgba(0,0,0,0.35)"; ctx.beginPath(); ctx.roundRect(x0 + 2, y0 + 3, w, h, w * 0.3); ctx.fill();
+    let g2 = ctx.createLinearGradient(x0, 0, x0 + w, 0);
+    g2.addColorStop(0, "#d9d4ca"); g2.addColorStop(0.5, "#f1ede5"); g2.addColorStop(1, "#b8b1a5");
+    ctx.fillStyle = g2; ctx.beginPath(); ctx.roundRect(x0, y0, w, h, w * 0.3); ctx.fill();
+    ctx.strokeStyle = "rgba(60,50,40,0.35)"; ctx.lineWidth = 1; ctx.stroke();
+    // rocker: the top half sinks when switched on
+    const rx = x0 + w * 0.2, ry = y0 + h * 0.3, rw = w * 0.6, rh = h * 0.52;
+    ctx.fillStyle = "#2e2a26"; ctx.beginPath(); ctx.roundRect(rx - 1.5, ry - 1.5, rw + 3, rh + 3, 3); ctx.fill();
+    g2 = ctx.createLinearGradient(0, ry, 0, ry + rh);
+    if (on) { g2.addColorStop(0, "#8e2a22"); g2.addColorStop(0.5, "#c9453a"); g2.addColorStop(1, "#e2645a"); }
+    else { g2.addColorStop(0, "#e2645a"); g2.addColorStop(0.5, "#c9453a"); g2.addColorStop(1, "#8e2a22"); }
+    ctx.fillStyle = g2; ctx.beginPath(); ctx.roundRect(rx, ry + press * 1.5, rw, rh, 2.5); ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,0.8)"; ctx.font = `600 ${Math.max(7, rh * 0.32)}px 'Golos Text', sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(on ? "I" : "O", rx + rw / 2, ry + rh * (on ? 0.68 : 0.32) + press * 1.5);
+    // lamp above the rocker
+    const lx = x0 + w / 2, ly = y0 + h * 0.15, lr = Math.max(2.2, w * 0.1);
+    if (on) { const gl = ctx.createRadialGradient(lx, ly, 0, lx, ly, lr * 4); gl.addColorStop(0, "rgba(255,170,90,0.7)"); gl.addColorStop(1, "rgba(255,170,90,0)"); ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(lx, ly, lr * 4, 0, TAU); ctx.fill(); }
+    ctx.fillStyle = on ? "#ffb35c" : "#5b534b"; ctx.beginPath(); ctx.arc(lx, ly, lr, 0, TAU); ctx.fill();
   }
 }

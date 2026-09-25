@@ -70,9 +70,11 @@ Object.assign(UI, {
     // brass nameplate
     g = x.createLinearGradient(0, y0 + 56, 0, y0 + 88);
     g.addColorStop(0, "#f0cf8f"); g.addColorStop(1, "#9c7236");
-    x.fillStyle = g; x.beginPath(); x.roundRect(270, y0 + 56, 180, 32, 4); x.fill();
-    x.fillStyle = "#3a2810"; x.font = "600 13px 'Golos Text', sans-serif"; x.textAlign = "center"; x.textBaseline = "middle";
-    x.fillText("ВЫБИВАЛЬНАЯ МАШИНА ВМ-2", 360, y0 + 72);
+    x.font = "600 13px 'Golos Text', sans-serif";
+    const plate = "ВЫБИВАЛЬНАЯ МАШИНА ВМ-2", pw = Math.ceil(x.measureText(plate).width) + 28;
+    x.fillStyle = g; x.beginPath(); x.roundRect(360 - pw / 2, y0 + 56, pw, 32, 4); x.fill();
+    x.fillStyle = "#3a2810"; x.textAlign = "center"; x.textBaseline = "middle";
+    x.fillText(plate, 360, y0 + 72);
     // bolts
     x.fillStyle = "rgba(20,26,22,0.8)";
     for (let b = 80; b < 650; b += 48) { x.beginPath(); x.arc(b, y0 + 44, 3, 0, TAU); x.fill(); }

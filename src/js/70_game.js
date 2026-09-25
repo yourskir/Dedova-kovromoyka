@@ -607,7 +607,7 @@ function askFinish() {
   strokeEnd();
   statsTick();
   const s = G.sim, pr = G.pred || predictScore();
-  const left = lossList(pr.loss).map(([k, v]) => `${LOSS_NAMES[k]} −${Math.max(1, Math.round(v))}%`);
+  const left = lossList(pr.loss).slice(0, 4).map(([k, v]) => `${LOSS_NAMES[k]} −${Math.max(1, Math.round(v))}%`);
   const rep = needsRepair(s) ? [...new Set(repairTargets(s).map((t) => REPAIR_NAMES[t.type]))] : [];
   const stars = G.order.kind === "free" ? -1 : starsFor(pr.score);
   UI.confirmFinish({ left, rep, score: pr.score, stars, pct: pr.score / 100, free: G.order.kind === "free" }, () => runFinish(), () => {});

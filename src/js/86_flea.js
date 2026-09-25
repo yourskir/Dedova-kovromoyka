@@ -185,7 +185,7 @@ Object.assign(UI, {
       <div class="fp-row"><span>Куплен за</span><b>${fmtMoney(p.buy)}</b></div>
       <div class="fp-row"><span>Покупатель даёт</span><b>${fmtMoney(p.sale)} <i class="${d >= 0 ? "up" : "down"}">${d >= 0 ? "+" : "−"}${fmtMoney(Math.abs(d))}</i></b></div>
       <div class="fp-row soft"><span>На стене цена растёт на 3% в день, до +30%</span></div>
-      <div class="fp-acts"><button class="btn-ink" id="fpSell">Продать</button><button class="btn-ink alt" id="fpHang" ${full ? "disabled" : ""}>${full ? "Стена занята" : "На стену"}</button></div></div>`;
+      <div class="fp-acts"><button class="${inResult ? "btn-ink" : "btn-sc main"}" id="fpSell">Продать</button><button class="${inResult ? "btn-ink alt" : "btn-sc"}" id="fpHang" ${full ? "disabled" : ""}>${full ? "Стена занята" : "На стену"}</button></div></div>`;
   },
   _stallHtml() {
     const m = fleaMarket(), stock = S.stock || [];

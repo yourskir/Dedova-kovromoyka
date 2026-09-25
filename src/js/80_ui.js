@@ -330,7 +330,7 @@ const UI = {
       const d = new Date(e.date);
       const k = clamp(e.dirt * 1.6, 0.2, 0.8);
       h += `<div class="alb-c"><div class="alb-img">${th ? `<img src="${th}" alt="">` : ""}<i class="alb-dirt" style="opacity:${k.toFixed(2)}"></i><i class="alb-line"></i></div>
-        <b>${e.title}</b><small>${e.client ? e.client + " · " : ""}${d.getDate()} ${months[d.getMonth()]}</small>
+        <b>${e.title}</b><small>${e.client ? e.client + " · " : ""}${d.getDate()}&nbsp;${months[d.getMonth()]}</small>
         <div class="alb-f"><span class="kg">${e.kg >= 0.01 ? "−" + fmtKg(e.kg) : "±0"}</span>${e.stars > 0 ? starsHtml(e.stars) : `<span class="pc">${e.score}%</span>`}</div></div>`;
     }
     h += `</div>`;
@@ -374,12 +374,9 @@ const UI = {
   // drying room: two fan switches and a hygrometer between them
   dryTools() {
     this.finishBottom(`<button class="ftool" data-f="0">${icon("fan")}<small>Слева</small></button><div class="hygro"><small>влажность</small><b id="hyg">100%</b><span><i id="hygBar"></i></span></div><button class="ftool" data-f="1">${icon("fan")}<small>Справа</small></button>`);
-    for (const b of $("fBottom").querySelectorAll(".ftool")) b.onclick = () => {
-      const d = G.dryRoom; if (!d) return;
-      AU.tok(); const q = +b.dataset.f; d.fans[q] = !d.fans[q]; b.classList.toggle("on", d.fans[q]);
-      if (d.fans[0] || d.fans[1]) UI.finishCap("Вода стекает вниз и капает в поддон");
-    };
+    for (const b of $("fBottom").querySelectorAll(".ftool")) b.onclick = () => dryToggle(+b.dataset.f);
   },
+  dryFan(q, on) { const b = $("fBottom").querySelector(`.ftool[data-f="${q}"]`); if (b) b.classList.toggle("on", on); },
   dryHum(h) { const e = $("hyg"); if (!e) return; e.textContent = h + "%"; $("hygBar").style.transform = `scaleX(${(h / 100).toFixed(3)})`; },
   // finish step with a couple of hand tools and a done plaque
   finishTools(tools, cur, doneLabel, doneSub, onDone) {

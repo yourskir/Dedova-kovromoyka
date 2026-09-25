@@ -1,4 +1,33 @@
 // ===== Drying room: the rug hangs on a rail, fans blow, water runs down and drips =====
+// fans stand beside the rug, each on a cord with an inline switch
+function dryGeom(s) {
+  const gw = s.gw, cpm = s.cpm, mid = (s.by0 + s.by1) / 2;
+  const fOff = gw * 0.14, fR = Math.min(0.25 * cpm, gw * 0.12);
+  return [0, 1].map((q) => {
+    const fx = q === 0 ? -fOff : gw + fOff;
+    return { fx, fy: mid, fR, swx: fx, swy: mid + fR + 0.5 * cpm, sww: 0.18 * cpm, swh: 0.3 * cpm };
+  });
+}
+// a tap on a fan or on its switch: which fan, or -1
+function dryHit(px, py) {
+  const s = G.sim; if (!s || !G.dryRoom) return -1;
+  const [wx, wy] = s2w(px, py), g = dryGeom(s);
+  const minR = 26 * G.dpr / G.cam.s;
+  for (let q = 0; q < 2; q++) {
+    const f = g[q];
+    if (Math.hypot(wx - f.fx, wy - f.fy) < Math.max(f.fR * 1.15, minR)) return q;
+    if (Math.abs(wx - f.swx) < Math.max(f.sww * 0.9, minR) && Math.abs(wy - f.swy) < Math.max(f.swh * 0.75, minR)) return q;
+  }
+  return -1;
+}
+function dryToggle(q) {
+  const d = G.dryRoom; if (!d || d.done) return;
+  d.fans[q] = !d.fans[q];
+  d.flip = d.flip || [-9, -9]; d.flip[q] = G.t;
+  AU.tok(); vibrate(8);
+  UI.dryFan(q, d.fans[q]);
+  if (d.fans[0] || d.fans[1]) UI.finishCap("Вода стекает вниз и капает в поддон");
+}
 function dryRoomStart() {
   const s = G.sim, gw = s.gw, gh = s.gh;
   const N = new Float32Array(s.n);
@@ -18,10 +47,11 @@ function dryRoomStart() {
   G.dry = 0;
   G.dryRoom = { N, bottom, fans: [false, false], fanS: [0, 0], ang: [0, 0], t: 0, w0: w0 / Math.max(1, c), hum: 100, done: 0, dripAcc: 0, tray: 0, mark: 0, air: 0 };
   G.propLoc = "dryroom"; GLR.setFloor("dryroom");
-  UI.finishCap(UPG.heat ? "Тепловая пушка греет воздух. Включи вентиляторы, и ковёр высохнет ещё быстрее" : "Включи вентиляторы, ковёр высохнет быстрее");
+  UI.finishCap(UPG.heat ? "Тепловая пушка греет воздух. Щёлкни выключателями на шнурах, и ковёр высохнет ещё быстрее" : "Щёлкни выключателями на шнурах вентиляторов, ковёр высохнет быстрее");
   UI.dryTools();
   measureInsets(); fitCamera(true);
-  G.camTarget = { x: s.gw / 2, y: G.fit.y + s.gh * 0.03, s: G.fit.s * 0.68 };
+  // as close as the fans on both sides allow
+  G.camTarget = { x: s.gw / 2, y: G.fit.y + s.gh * 0.03, s: Math.min(G.fit.s * 0.9, G.W / (s.gw * 1.75)) };
 }
 function dryRoomTick(dt) {
   const d = G.dryRoom; if (!d) return;
